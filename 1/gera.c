@@ -34,3 +34,28 @@ void gerarNumerosDecrescentes(int *numeros, int quantidade, int limite) {
         numeros[i] = numeros[i - 1] - rand() % (limite / quantidade);
     }
 }
+void gerarLista(int *numeros,int quantidade){
+
+    FILE *arquivo;
+    const char *nomeArquivo = "minhaLista.txt";
+
+    // Abre o arquivo para escrita
+    arquivo = fopen(nomeArquivo, "w");
+
+    // Verifica se o arquivo foi aberto com sucesso
+    if (arquivo == NULL) {
+        fprintf(stderr, "Não foi possível abrir o arquivo %s para escrita.\n", nomeArquivo);
+        return;
+    }
+
+    // Escreve cada elemento da lista no arquivo
+    for (int i = 0; i < quantidade; i++) {
+        fprintf(arquivo, "%d\n", numeros[i]);
+    }
+
+    // Fecha o arquivo
+    fclose(arquivo);
+
+    printf("Lista salva com sucesso no arquivo %s.\n", nomeArquivo);
+
+ }

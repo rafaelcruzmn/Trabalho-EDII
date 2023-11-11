@@ -5,10 +5,16 @@
 #include "gera.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-int main() {
-    int quantidade = 5;  // Número de elementos a serem gerados
-    int limite = 100;    // Valor máximo para os números gerados
+int main(int argc, char *argv[]) {
+    if (argc != 3) {
+        printf("Uso: %s -a|-c|-d n\n", argv[0]);
+        return 1;
+    }
+
+    int quantidade = atoi(argv[2]);
+    int limite = 1000;  // Valor máximo para os números gerados
     int *numeros = malloc(quantidade * sizeof(int));
 
     if (numeros == NULL) {
@@ -16,51 +22,30 @@ int main() {
         return 1;
     }
 
-    int continuar = 1;
-
-    while (continuar) {
-        printf("Escolha a opção de geração:\n");
-        printf("1 - Aleatórios\n");
-        printf("2 - Crescentes\n");
-        printf("3 - Decrescentes\n");
-        printf("0 - Sair\n");
-
-        int opcao;
-        scanf("%d", &opcao);
-
-        switch (opcao) {
-            case 1:
-                gerarNumerosAleatorios(numeros, quantidade, limite);
-                break;
-            case 2:
-                gerarNumerosCrescentes(numeros, quantidade, limite);
-                break;
-            case 3:
-                gerarNumerosDecrescentes(numeros, quantidade, limite);
-                break;
-            case 0:
-                continuar = 0;
-                break;
-            default:
-                printf("Opção inválida.\n");
-                break;
-        }
-
-        if (opcao >= 1 && opcao <= 3) {
-            // Imprime os números armazenados
-            printf("Números gerados:\n");
-            for (int i = 0; i < quantidade; i++) {
-                printf("%d\n", numeros[i]);
-            }
-        }
+    if (strcmp(argv[1], "-a") == 0) {
+        gerarNumerosAleatorios(numeros, quantidade, limite);
+    } else if (strcmp(argv[1], "-c") == 0) {
+        gerarNumerosCrescentes(numeros, quantidade, limite);
+    } else if (strcmp(argv[1], "-d") == 0) {
+        gerarNumerosDecrescentes(numeros, quantidade, limite);
+    } else {
+        printf("Opção inválida.\n");
+        free(numeros);
+        return 1;
     }
+
+    // Imprime os números gerados
+    printf("Numeros gerados:\n");
+    for (int i = 0; i < quantidade; i++) {
+        printf("%d\n", numeros[i]);
+    }
+
+
+    gerarLista(numeros, quantidade);
 
     // Libera a memória alocada
     free(numeros);
 
     return 0;
 }
-
-
-
 

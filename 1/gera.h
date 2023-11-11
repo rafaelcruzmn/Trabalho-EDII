@@ -8,7 +8,7 @@
 void gerarNumerosAleatorios(int *numeros, int quantidade, int limite);
 void gerarNumerosCrescentes(int *numeros, int quantidade, int limite);
 void gerarNumerosDecrescentes(int *numeros, int quantidade, int limite);
-
+void gerarLista(int *numeros,int quantidade);
 #endif
 
 
