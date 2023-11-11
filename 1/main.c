@@ -6,15 +6,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+// responsavel pelo tempo
+#include <time.h>
 
 int main(int argc, char *argv[]) {
+
+    //inicio da contagem
+    clock_t inicio = clock();
+
     if (argc != 3) {
         printf("Uso: %s -a|-c|-d n\n", argv[0]);
         return 1;
     }
 
     int quantidade = atoi(argv[2]);
-    int limite = 1000;  // Valor máximo para os números gerados
+    int limite = 300000;  // Valor máximo para os números gerados
     int *numeros = malloc(quantidade * sizeof(int));
 
     if (numeros == NULL) {
@@ -44,6 +50,13 @@ int main(int argc, char *argv[]) {
 
     // Libera a memória alocada
     free(numeros);
+
+    //fim da contagem
+    clock_t fim = clock();
+    //calcula o tempo
+    double tempoTotal = ((double)(fim - inicio)) / CLOCKS_PER_SEC;
+    printf("Tempo de execucao: %.2f segundos\n", tempoTotal);
+
 
     return 0;
 }
