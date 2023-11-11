@@ -37,7 +37,7 @@ void gerarNumerosDecrescentes(int *numeros, int quantidade, int limite) {
 void gerarLista(int *numeros,int quantidade){
 
     FILE *arquivo;
-    const char *nomeArquivo = "minhaLista.txt";
+    const char *nomeArquivo = "entrada.txt";
 
     // Abre o arquivo para escrita
     arquivo = fopen(nomeArquivo, "w");
@@ -53,7 +53,6 @@ void gerarLista(int *numeros,int quantidade){
         fprintf(arquivo, "%d\n", numeros[i]);
     }
 
-    // Fecha o arquivo
     fclose(arquivo);
 
     printf("Lista salva com sucesso no arquivo %s.\n", nomeArquivo);

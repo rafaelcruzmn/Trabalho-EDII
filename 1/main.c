@@ -40,7 +40,6 @@ int main(int argc, char *argv[]) {
         printf("%d\n", numeros[i]);
     }
 
-
     gerarLista(numeros, quantidade);
 
     // Libera a memória alocada
