@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 // Algoritmo de ordenação: RadixSort
 int findMax(int arr[], int n) {
@@ -240,11 +241,11 @@ void exibeArray(int arr[], int n) {
 //********************
 int main(int argc, char *argv[]){
     int n;
-    printf("Digite o /orderna Algoritimo" - "qntd de numeros" "entrada.txt" "");
     int arr[n];
-    
-    int numBuckets=arr[n];
-    
+    int numBuckets = (int)sqrt(n) + 1;
+
+        printf("Digite o /orderna Algoritimo" - "qntd de numeros" "entrada.txt" "");
+     
 
      // Escolha o algoritmo de ordenação com base no argumento fornecido
     if (strcmp(argv[2], "bolha") == 0) {
