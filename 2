@@ -1,8 +1,61 @@
 #include<stdio.h>
 #include <stdlib.h>
 
+// Algoritmo de ordenação: RadixSort
+int findMax(int arr[], int n) {
+    int max = arr[0];
+    for (int i = 1; i < n; i++)
+        if (arr[i] > max)
+            max = arr[i];
+    return max;
+}
 
+void radixSort(int arr[], int n) {
+    int exp, *output = malloc(n * sizeof(int)), max = findMax(arr, n);
 
+    for (exp = 1; max / exp > 0; exp *= 10) {
+        int count[10] = {0};
+
+        for (int i = 0; i < n; i++)
+            count[(arr[i] / exp) % 10]++;
+
+        for (int i = 1; i < 10; i++)
+            count[i] += count[i - 1];
+
+        for (int i = n - 1; i >= 0; i--)
+            output[--count[(arr[i] / exp) % 10]] = arr[i];
+
+        for (int i = 0; i < n; i++)
+            arr[i] = output[i];
+    }
+
+    free(output);
+}
+// Algoritmo de ordenação: Inserção Binaria
+void insercaoBinaria(int arr[], int n) {
+    int i, j, key, low, high, mid;
+
+    for (i = 1; i < n; i++) {
+        key = arr[i];
+        low = 0;
+        high = i - 1;
+
+        while (low <= high) {
+            mid = (low + high) / 2;
+            if (arr[mid] < key) {
+                low = mid + 1;
+            } else {
+                high = mid - 1;
+            }
+        }
+
+        for (j = i - 1; j >= low; j--) {
+            arr[j + 1] = arr[j];
+        }
+
+        arr[low] = key;
+    }
+}
 
 // Algoritmo de ordenação: Bubble Sort
 void bubbleSort(int arr[], int n) {
@@ -29,6 +82,50 @@ void insertionSort(int arr[], int n) {
         arr[j + 1] = chave;
     }
 }
+// Algoritmo de ordenação: BucketSort
+// Estrutura para representar um nó em um balde
+typedef struct Node {
+    int data;
+    struct Node *next;
+} Node;
+
+// Função para inserir um elemento em um balde
+void insert(Node **bucket, int value) {
+    Node *newNode = (Node *)malloc(sizeof(Node));
+    newNode->data = value;
+    newNode->next = *bucket;
+    *bucket = newNode;
+}
+
+// Função para realizar o Bucket Sort
+void bucketSort(int arr[], int n, int numBuckets) {
+    Node **buckets = (Node **)malloc(numBuckets * sizeof(Node *));
+
+    for (int i = 0; i < numBuckets; i++) {
+        buckets[i] = NULL;
+    }
+
+    // Distribui os elementos nos baldes
+    for (int i = 0; i < n; i++) {
+        int bucketIndex = arr[i] / numBuckets;
+        insert(&buckets[bucketIndex], arr[i]);
+    }
+
+    int index = 0;
+    // Coleta os elementos dos baldes e atualiza o array original
+    for (int i = 0; i < numBuckets; i++) {
+        Node *current = buckets[i];
+        while (current != NULL) {
+            arr[index++] = current->data;
+            Node *temp = current;
+            current = current->next;
+            free(temp); // Libera a memória do nó do balde
+        }
+    }
+
+    free(buckets);
+}
+
 
 // Algoritmo de ordenação: Selection Sort
 void selectionSort(int arr[], int n) {
@@ -144,9 +241,10 @@ void exibeArray(int arr[], int n) {
 int main(int argc, char *argv[]){
     int n;
     printf("Digite o /orderna Algoritimo" - "qntd de numeros" "entrada.txt" "");
-
-
     int arr[n];
+    
+    int numBuckets=arr[n];
+    
 
      // Escolha o algoritmo de ordenação com base no argumento fornecido
     if (strcmp(argv[2], "bolha") == 0) {
@@ -161,6 +259,12 @@ int main(int argc, char *argv[]){
         mergeSort(arr, 0, n - 1);
     } else if (strcmp(argv[2], "quick") == 0) {
         quickSort(arr, 0, n - 1);
+    }else if (strcmp(argv[2], "binaria") == 0) {
+        insercaoBinaria(arr, n);
+    }else if (strcmp(argv[2], "radix") == 0) {
+        radixSort(arr, n);
+    }else if (strcmp(argv[2], "bucket") == 0) {
+        bucketSort(arr, n, numBuckets);
     } else {
         printf("Algoritmo de ordenacao invalido.\n");
         return 1;
