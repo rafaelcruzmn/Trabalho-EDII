@@ -1,0 +1,169 @@
+#include<stdio.h>
+#include <stdlib.h>
+
+
+
+
+// Algoritmo de ordenação: Bubble Sort
+void bubbleSort(int arr[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                troca(&arr[j], &arr[j + 1]);
+            }
+        }
+    }
+}
+
+// Algoritmo de ordenação: Insertion Sort
+void insertionSort(int arr[], int n) {
+    int chave, j;
+    for (int i = 1; i < n; i++) {
+        chave = arr[i];
+        j = i - 1;
+
+        while (j >= 0 && arr[j] > chave) {
+            arr[j + 1] = arr[j];
+            j = j - 1;
+        }
+        arr[j + 1] = chave;
+    }
+}
+
+// Algoritmo de ordenação: Selection Sort
+void selectionSort(int arr[], int n) {
+    int indiceMenor;
+    for (int i = 0; i < n - 1; i++) {
+        indiceMenor = i;
+        for (int j = i + 1; j < n; j++) {
+            if (arr[j] < arr[indiceMenor]) {
+                indiceMenor = j;
+            }
+        }
+        troca(&arr[i], &arr[indiceMenor]);
+    }
+}
+
+// Algoritmo de ordenação: Shell Sort
+void shellSort(int arr[], int n) {
+    for (int intervalo = n / 2; intervalo > 0; intervalo /= 2) {
+        for (int i = intervalo; i < n; i++) {
+            int temp = arr[i];
+            int j;
+            for (j = i; j >= intervalo && arr[j - intervalo] > temp; j -= intervalo) {
+                arr[j] = arr[j - intervalo];
+            }
+            arr[j] = temp;
+        }
+    }
+}
+
+// Algoritmo de ordenação: Merge Sort
+void merge(int arr[], int inicio, int meio, int fim) {
+    int n1 = meio - inicio + 1;
+    int n2 = fim - meio;
+
+    int L[n1], R[n2];
+
+    for (int i = 0; i < n1; i++)
+        L[i] = arr[inicio + i];
+    for (int j = 0; j < n2; j++)
+        R[j] = arr[meio + 1 + j];
+
+    int i = 0;
+    int j = 0;
+    int k = inicio;
+
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j]) {
+            arr[k] = L[i];
+            i++;
+        } else {
+            arr[k] = R[j];
+            j++;
+        }
+        k++;
+    }
+
+    while (i < n1) {
+        arr[k] = L[i];
+        i++;
+        k++;
+    }
+
+    while (j < n2) {
+        arr[k] = R[j];
+        j++;
+        k++;
+    }
+}
+
+void mergeSort(int arr[], int inicio, int fim) {
+    if (inicio < fim) {
+        int meio = inicio + (fim - inicio) / 2;
+
+        mergeSort(arr, inicio, meio);
+        mergeSort(arr, meio + 1, fim);
+
+        merge(arr, inicio, meio, fim);
+    }
+}
+
+// Algoritmo de ordenação: Quick Sort
+int particiona(int arr[], int baixo, int alto) {
+    int pivo = arr[alto];
+    int i = (baixo - 1);
+
+    for (int j = baixo; j <= alto - 1; j++) {
+        if (arr[j] < pivo) {
+            i++;
+            troca(&arr[i], &arr[j]);
+        }
+    }
+    troca(&arr[i + 1], &arr[alto]);
+    return (i + 1);
+}
+
+void quickSort(int arr[], int baixo, int alto) {
+    if (baixo < alto) {
+        int indicePivo = particiona(arr, baixo, alto);
+
+        quickSort(arr, baixo, indicePivo - 1);
+        quickSort(arr, indicePivo + 1, alto);
+    }
+}
+
+// Função para exibir o array
+void exibeArray(int arr[], int n) {
+    for (int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+}
+//********************
+int main(int argc, char *argv[]){
+    int n;
+    printf("Digite o /orderna Algoritimo" - "qntd de numeros" "entrada.txt" "");
+
+
+    int arr[n];
+
+     // Escolha o algoritmo de ordenação com base no argumento fornecido
+    if (strcmp(argv[2], "bolha") == 0) {
+        bubbleSort(arr, n);
+    } else if (strcmp(argv[2], "insercao") == 0) {
+        insertionSort(arr, n);
+    } else if (strcmp(argv[2], "selecao") == 0) {
+        selectionSort(arr, n);
+    } else if (strcmp(argv[2], "shell") == 0) {
+        shellSort(arr, n);
+    } else if (strcmp(argv[2], "merge") == 0) {
+        mergeSort(arr, 0, n - 1);
+    } else if (strcmp(argv[2], "quick") == 0) {
+        quickSort(arr, 0, n - 1);
+    } else {
+        printf("Algoritmo de ordenacao invalido.\n");
+        return 1;
+    }
+
+}
