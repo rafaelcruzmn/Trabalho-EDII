@@ -1,13 +1,13 @@
-CC = gcc
-CFLAGS = -Wall -Wextra -std=c99
+all: mainUm mainDois
 
-all: gera ordena
+mainUm: gera.o
+	gcc ./Questao1/main.c gera.o -o mainUm
 
-gera: gera.c
-	$(CC) $(CFLAGS) gera.c -o gera
+mainDois: ordena.o
+	gcc ./Questao2/main.c ordena.o -o mainDois
 
-ordena: ordena.c
-	$(CC) $(CFLAGS) ordena.c -o ordena
+gera.o: ./Questao1/gera.c ./Questao1/gera.h
+	gcc -c ./Questao1/gera.c -o gera.o
 
-clean:
-	rm -f gera ordena
+ordena.o: ./Questao2/ordena.c ./Questao2/ordena.h
+	gcc -c ./Questao2/ordena.c -o ordena.o
